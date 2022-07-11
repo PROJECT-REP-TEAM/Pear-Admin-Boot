@@ -100,7 +100,7 @@
         });
 
         form.on('submit(dept-query)', function (data) {
-            treetable.search("#dept-table", data.field.deptName);
+            treetable.search("#dept-table", data.field.deptName,"deptName");
             return false;
         });
 

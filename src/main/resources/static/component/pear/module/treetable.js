@@ -127,19 +127,26 @@ layui.define(['layer', 'table'], function (exports) {
                 }
             })
         },
-        search: function(elem,keyword) {
+        search: function(elem,keyword,...others) {
             var $tds = $(elem).next('.treeTable').find('.layui-table-body tbody tr td');
             if (!keyword) {
                 $tds.css('background-color', 'transparent');
                 layer.msg("请输入关键字", {icon: 5});
                 return;
             }
+            var itemname = undefined;
+            if(others.length>0){
+                itemname = others[0]
+            }
             var searchCount = 0;
             $tds.each(function () {
-                $(this).css('background-color', 'transparent');
-                if ($(this).text().indexOf(keyword) >= 0) {
-                    $(this).css('background-color', 'rgba(250,230,160,0.5)');
-                    if (searchCount == 0) {
+                const that = $(this)
+                that.css('background-color', 'transparent');
+                if (that.text().indexOf(keyword) >= 0) {
+                    if(itemname!==undefined && that.attr("data-field")===itemname){
+                        that.css('background-color', 'rgba(250,230,160,0.5)');
+                    }
+                    if (searchCount == 0 ) {
                         $('body,html').stop(true);
                         $('body,html').animate({scrollTop: $(this).offset().top - 150}, 500);
                     }
